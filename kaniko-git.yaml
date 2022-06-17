@@ -8,10 +8,15 @@ spec:
   containers:
   - name: kaniko
     image: gcr.io/kaniko-project/executor:debug
-    args: ["--context=git://github.com/vfarcic/kaniko-demo",
-            "--destination=vfarcic/devops-toolkit:1.0.0"]
+    #This is where kanico is pulling from (could be from just about any source aka context -- so it will clone repo for us)
+          #Where to find source code and dockerfill
+    args: ["--context=git://github.com/spencerstok/kaniko-demo",
+            "--destination=b0tm4n/devops-toolkit:1.0.0"]
+            #This will be publishing to destination (docker or possibly harbor here)
     volumeMounts:
+      #Mounting kanico-secret
       - name: kaniko-secret
+        #this is mounted inside the container with this path
         mountPath: /kaniko/.docker
   restartPolicy: Never
   volumes:
